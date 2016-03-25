@@ -1,0 +1,27 @@
+{
+  "watchr":{
+	"paths":[
+		"../../../../data/system/drivers",
+		"../../../../data/system/protocols"
+	]
+  },
+  "common":{
+	"createSocketServer":true,
+	"stdin":true,
+	"stdout":true
+  },
+  "socket_server":{
+	"port":9993,
+	"host":"0.0.0.0",
+	"debug":1
+  },
+  "debug":{
+	"all":false,
+	"protocol_connection":true,
+	"protocol_messages":true,
+	"socket_server":true,
+	"socket_client":true,
+	"socket_messages":true,
+	"main":true
+  }
+}

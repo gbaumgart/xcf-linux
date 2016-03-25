@@ -1,0 +1,35 @@
+{
+  "watchr":{
+    "paths":[
+      "../../../../data/system"
+    ]
+  },
+  "dataPath":"../../../../data/system/",
+  "driver":{
+      "scopes":{
+          "system_drivers":"xcf/data/driver/system/"
+      }
+  },
+
+  "common":{
+      "createSocketServer":true,
+      "stdin":true,
+      "stdout":true
+  },
+  "socket_server": {
+      "port":9998,
+      "host":"0.0.0.0",
+      "debug":1
+  },
+
+  "debug": {
+      "all": true,
+      "protocol_connection": true,
+      "protocol_messages": true,
+      "socket_server":true,
+      "socket_client":true,
+      "socket_messages":true,
+      "debugDevices":true,
+      "main":true
+  }
+}
