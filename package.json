@@ -1,6 +1,6 @@
 {
     "name": "xcf-linux",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "contributors": [],
     "dependencies": {
         "ansi-to-html": "^0.3.0",
@@ -30,11 +30,20 @@
         "winston": "2.1.1"
     },
     "devDependencies": {},
+    "author": {
+        "name": "x4mm",
+        "url": "http://x4mm.net"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/gbaumgart/xcf-linux.git"
+    },
     "optionalDependencies": {
         "redis": "0.7.3",
         "inotify-plusplus": "git://github.com/gbaumgart/node-inotify-plusplus#master"
     },
     "scripts": {},
     "readmeFilename": "Readme.md",
-    "homepage": "https://github.com/gbaumgart/xcf-linux"
+    "homepage": "http://github.com/gbaumgart/xcf-linux",
+    "license": "BSD-3-Clause"
 }
