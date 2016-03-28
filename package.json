@@ -17,6 +17,7 @@
     "mosca": "^1.0.2",
     "mqtt": "^1.6.3",
     "progress": "^1.1.8",
+    "ssh2": "^0.5.0",
     "readline": "0.0.7",
     "request": "^2.69.0",
     "request-progress": "^2.0.1",
