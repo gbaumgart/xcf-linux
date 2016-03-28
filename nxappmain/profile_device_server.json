@@ -4,7 +4,7 @@
       "../../../../data/system"
     ]
   },
-  "dataPath":"../../../../data/system/",
+  "data":"../../../../data/system/",
   "driver":{
       "scopes":{
           "system_drivers":"xcf/data/driver/system/"
