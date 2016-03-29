@@ -21,39 +21,30 @@ define(["./_base/kernel", "./has", "require"], function(kernel, has, require){
 		load: function(/*string*/ id, /*Function*/ contextRequire, /*Function*/ load){
 			/*global define:true */
 
-			// The `nodeRequire` function comes from the Node.js module of the AMD loader, so module ID resolution is
-			// relative to the loader's path, not the calling AMD module's path. This means that loading Node.js
-			// modules that exist in a higher level or sibling path to the loader will cause those modules to fail to
-			// resolve.
-			//
-			// Node.js does not expose a public API for performing module filename resolution relative to an arbitrary
-			// directory root, so we are forced to dig into the internal functions of the Node.js `module` module to
-			// use Node.js's own path resolution code instead of having to duplicate its rules ourselves.
-			//
-			// Sooner or later, probably around the time that Node.js internal code is reworked to use ES6, these
-			// methods will no longer be exposed and we will have to find another workaround if they have not exposed
-			// an API for doing this by then.
-
-			if(id && global.moduleCache[id]){
-				return global.moduleCache[id];
+			if(!require.nodeRequire){
+				throw new Error("Cannot find native require function");
 			}
 
-			var oldDefine = define,
-				result;
+			load((function(id, require){
+				var oldDefine = define,
+					result;
 
-			// Some modules attempt to detect an AMD loader by looking for global AMD `define`. This causes issues
-			// when other CommonJS modules attempt to load them via the standard Node.js `require`, so hide it
-			// during the load
-			define = undefined;
+				if(id && global.moduleCache && global.moduleCache[id]){
+					return global.moduleCache[id];
+				}
 
-			try {
-				result = nodeRequire(id);
-			}
-			finally {
-				define = oldDefine;
-			}
+				// Some modules may attempt to detect an AMD loader via define and define.amd.  This can cause issues
+				// when other CommonJS modules attempt to load them via the standard node require().  If define is
+				// temporarily moved into another variable, it will prevent modules from detecting AMD in this fashion.
+				define = undefined;
 
-			load(result);
+				try{
+					result = require(id);
+				}finally{
+					define = oldDefine;
+				}
+				return result;
+			})(id, require.nodeRequire));
 		},
 
 		normalize: function (/**string*/ id, /*Function*/ normalize){
