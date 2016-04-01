@@ -14,7 +14,8 @@
     "sockjs-client-ws": "0.1.0",
     "ssh2": "^0.5.0",
     "winston": "2.1.1",
-    "colors": "1.1.2"
+    "colors": "1.1.2",
+    "tracer": "^0.8.3"
   },
   "devDependencies": {},
   "optionalDependencies": {
