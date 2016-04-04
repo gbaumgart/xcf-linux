@@ -20,7 +20,7 @@ var DEVICE_SERVER = path.resolve(UTILS_ROOT +'/app/xide/serverlinux.exe');
 var DEVICE_SERVER_ARGS = [];
 
 
-var _ = require('lodash');
+var extend = require('extend');
 var pids = [];
 var options = {
     stdout: true,
@@ -76,7 +76,7 @@ function start(path,args,options){
 //
 //
 //
-var nginx = start(NGINX_EXE,NGINX_ARGS,_.extend({
+var nginx = start(NGINX_EXE,NGINX_ARGS,extend({
     kill:NGINX_EXE,
     killCWD:APP_ROOT,
     killArgs:['-s', 'stop']
@@ -84,7 +84,7 @@ var nginx = start(NGINX_EXE,NGINX_ARGS,_.extend({
 
 var php = start(PHP_CGI,PHP_CGI_ARGS,options);
 
-var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,_.extend({
+var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,extend({
     cwd:UTILS_ROOT +'/app/xide'
 },options));
 
@@ -99,7 +99,7 @@ process.on('SIGINT', function() {
     for (var i = 0; i < pids.length; i++) {
         var obj = pids[i];
         if(obj.options.kill){
-            var kill = exec.spawn(obj.options.kill,obj.options.killArgs,_.extend({
+            var kill = exec.spawn(obj.options.kill,obj.options.killArgs,extend({
                 cwd:obj.options.killCWD
             },obj.options),obj.options.killArgs);
             continue;
