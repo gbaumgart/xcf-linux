@@ -7,15 +7,16 @@
     "url": "https://github.com/LearnBoost/socket.io.git"
   },
   "dependencies": {
+    "colors": "1.1.2",
+    "extend": "^3.0.0",
     "mosca": "^1.0.2",
     "mqtt": "^1.6.3",
     "sockjs": "0.3.15",
     "sockjs-client": "1.0.3",
     "sockjs-client-ws": "0.1.0",
     "ssh2": "^0.5.0",
-    "winston": "2.1.1",
-    "colors": "1.1.2",
-    "tracer": "^0.8.3"
+    "tracer": "^0.8.3",
+    "winston": "2.1.1"
   },
   "devDependencies": {},
   "optionalDependencies": {
