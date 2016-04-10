@@ -9,16 +9,17 @@ var UTILS_ROOT = path.resolve('../../');//Utils
 var APP_ROOT = path.resolve('../../../../');//Control-Freak
 
 //----------------
-var NGINX_EXE = path.resolve(APP_ROOT+'/nginx-x86_64');
+var NGINX_EXE = path.resolve(APP_ROOT+'/nginx');
 var NGINX_ARGS = ["-p",APP_ROOT + "/"];
 //----------------
-var PHP_CGI = 'php-cgi';
+var PHP_CGI = path.resolve(APP_ROOT +'/php/php-cgi');
 var PHP_CGI_ARGS = ["-b","0.0.0.0:9011"];
 
 //----------------
-var DEVICE_SERVER = path.resolve(UTILS_ROOT +'/app/xide/serverlinux.exe');
+var DEVICE_SERVER = path.resolve(UTILS_ROOT +'/app/xide/server');
 var DEVICE_SERVER_ARGS = [];
 
+console.log('---start servers');
 
 var extend = require('extend');
 var pids = [];
