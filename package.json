@@ -22,7 +22,7 @@
     "node-notifier": "^4.5.0",
     "serialport": "^2.0.6",
     "redis": "0.7.3",
-    "inotify-plusplus": "git://github.com/gbaumgart/node-inotify-plusplus#master"
+    "gbaumgart.inotify-plusplus": "1.0.4"
   },
   "scripts": {},
   "readmeFilename": "Readme.md"
