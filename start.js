@@ -10,14 +10,17 @@ var APP_ROOT = path.resolve('../../../../');//Control-Freak
 
 //----------------
 var NGINX_EXE = path.resolve(APP_ROOT+'/nginx');
-var NGINX_ARGS = ["-p",APP_ROOT + "/"];
+var NGINX_ARGS = ["-p", APP_ROOT + path.sep];
 //----------------
 var PHP_CGI = path.resolve(APP_ROOT +'/php/php-cgi');
-var PHP_CGI_ARGS = ["-b","0.0.0.0:9011"];
-
+var PHP_CGI_ARGS = ["-b","127.0.0.1:9011"];
 //----------------
 var DEVICE_SERVER = path.resolve(UTILS_ROOT +'/app/xide/server');
 var DEVICE_SERVER_ARGS = [];
+
+//----------------
+var MONGO_SERVER = path.resolve(APP_ROOT+'/mongo/mongod');
+var MONGO_SERVER_ARGS = ["--quiet","--dbpath", path.resolve(APP_ROOT + '/data/_MONGO'), "--storageEngine=mmapv1"];
 
 console.log('---start servers');
 
@@ -83,12 +86,20 @@ var nginx = start(NGINX_EXE,NGINX_ARGS,extend({
     killArgs:['-s', 'stop']
 },options));
 
-var php = start(PHP_CGI,PHP_CGI_ARGS,options);
-
-var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,extend({
-    cwd:UTILS_ROOT +'/app/xide'
+console.log('run php in '+ path.resolve(APP_ROOT +'/php/'));
+var php = start(PHP_CGI,PHP_CGI_ARGS,extend({
+    cwd:path.resolve(APP_ROOT +'/php/')
 },options));
 
+
+var mongoServer = start(MONGO_SERVER,MONGO_SERVER_ARGS,extend({
+    cwd:APP_ROOT +''
+},options));
+
+
+var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,extend({
+    cwd:path.resolve(UTILS_ROOT +'/app/xide')
+},options));
 
 
 /********************************************************************
@@ -96,7 +107,6 @@ var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,extend({
  */
 process.stdin.resume();
 process.on('SIGINT', function() {
-
     for (var i = 0; i < pids.length; i++) {
         var obj = pids[i];
         if(obj.options.kill){
@@ -111,8 +121,8 @@ process.on('SIGINT', function() {
             console.error('error killing ');
         }
     }
-
+    //kill us in latestly 5 secs
     setTimeout(function(){
         process.exit();
-    },2000);
+    },5000);
 });
