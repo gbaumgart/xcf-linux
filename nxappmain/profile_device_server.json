@@ -19,17 +19,17 @@
   "socket_server": {
       "port":9998,
       "host":"0.0.0.0",
-      "debug":1
+      "debug":false
   },
 
   "debug": {
-      "all": true,
-      "protocol_connection": true,
-      "protocol_messages": true,
-      "socket_server":true,
-      "socket_client":true,
-      "socket_messages":true,
-      "debugDevices":true,
-      "main":true
+      "all": false,
+      "protocol_connection": false,
+      "protocol_messages": false,
+      "socket_server":false,
+      "socket_client":false,
+      "socket_messages":false,
+      "debugDevices":false,
+      "main":false
   }
 }

@@ -4,7 +4,6 @@ var path = require('path');
 var commander = require('commander');
 var util = require('util');
 var exec = require('child_process');
-var mod_events        = require('events');
 var UTILS_ROOT = path.resolve('../../');//Utils
 var APP_ROOT = path.resolve('../../../../');//Control-Freak
 
@@ -20,7 +19,7 @@ var DEVICE_SERVER_ARGS = [];
 
 //----------------
 var MONGO_SERVER = path.resolve(APP_ROOT+'/mongo/mongod');
-var MONGO_SERVER_ARGS = ["--quiet","--dbpath", path.resolve(APP_ROOT + '/data/_MONGO'), "--storageEngine=mmapv1"];
+var MONGO_SERVER_ARGS = ["--smallfiles","--quiet","--dbpath", path.resolve(APP_ROOT + '/data/_MONGO'), "--storageEngine=mmapv1"];
 
 console.log('---start servers');
 
@@ -44,10 +43,16 @@ var options = {
         });
     }
 };
+function mongoReady(){
+    var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,extend({
+        cwd:path.resolve(UTILS_ROOT +'/app/xide')
+    },options));
+}
 function start(path,args,options){
 
-    exec.execFile('chmod',['+x',path]);
+    //exec.execFile('chmod',['+x',path]);
 
+    options.path = path;
     var process = exec.spawn(path, args || [],options, function (err, stdout, stderr) {
 
         if (typeof options.callback === 'function') {
@@ -62,7 +67,12 @@ function start(path,args,options){
     }.bind(this));
 
     process.stdout.on('data',function(data){
-        console.log('stdout data (' + process.pid + '): ' + data);
+
+        var str = data.toString();
+        console.log('stdout data (' + process.pid + '): ' + str);
+        if(str.indexOf("waiting for connections on port")!==-1){
+	        mongoReady();
+	    }
     });
     process.stderr.on('data',function(data){
         console.log('stderr data (' + process.pid + '|' + path  + '): \n' + data);
@@ -86,19 +96,12 @@ var nginx = start(NGINX_EXE,NGINX_ARGS,extend({
     killArgs:['-s', 'stop']
 },options));
 
-console.log('run php in '+ path.resolve(APP_ROOT +'/php/'));
 var php = start(PHP_CGI,PHP_CGI_ARGS,extend({
     cwd:path.resolve(APP_ROOT +'/php/')
 },options));
 
-
 var mongoServer = start(MONGO_SERVER,MONGO_SERVER_ARGS,extend({
     cwd:APP_ROOT +''
-},options));
-
-
-var deviceServer = start(DEVICE_SERVER,DEVICE_SERVER_ARGS,extend({
-    cwd:path.resolve(UTILS_ROOT +'/app/xide')
 },options));
 
 
