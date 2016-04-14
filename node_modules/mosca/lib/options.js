@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 var bunyan = require("bunyan");
 var extend = require("extend");
-var deepcopy = require("deepcopy");
+var clone = require("clone");
 var jsonschema = require("jsonschema");
 var serializers = require("./serializers");
 
@@ -94,7 +94,7 @@ function modernize(legacy) {
   // construct `credentials`
   if (legacy.hasOwnProperty('credentials')) {
     // copy as is
-    modernized.credentials = deepcopy(legacy.credentials);
+    modernized.credentials = clone(legacy.credentials);
   } else if (legacy.hasOwnProperty('secure')) {
     // construct from `secure`
     modernized.credentials = {};
@@ -108,8 +108,8 @@ function modernize(legacy) {
 
   // construct `interfaces`
   if (legacy.hasOwnProperty('interfaces')) {
-    // copy as is
-    modernized.interfaces = deepcopy(legacy.interfaces);
+    // cloning
+    modernized.interfaces = clone(legacy.interfaces);
   } else {
     // construct from legacy keys
     modernized.interfaces = [];
@@ -121,6 +121,10 @@ function modernize(legacy) {
 
       if (legacy.hasOwnProperty('port')) {
         mqtt_interface.port = legacy.port;
+      }
+
+      if (legacy.hasOwnProperty('maxConnections')) {
+        mqtt_interface.maxConnections = legacy.maxConnections;
       }
 
       modernized.interfaces.push(mqtt_interface);
@@ -320,6 +324,7 @@ function defaultsLegacy() {
   return {
     port: 1883,
     host: null,
+    maxConnections: 10000000,
     backend: {
       json: false,
       wildcardOne: '+',
@@ -353,7 +358,7 @@ function defaultsModern() {
   return {
     host: null,
     interfaces: [
-      { type: "mqtt", port: 1883 }
+      { type: "mqtt", port: 1883, maxConnections: 10000000 }
     ],
     backend: {
       json: false,
