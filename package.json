@@ -7,21 +7,21 @@
     "url": "https://github.com/LearnBoost/socket.io.git"
   },
   "dependencies": {
-    "mosca": "^1.0.2",
-    "mqtt": "^1.6.3",
-    "sockjs": "0.3.15",
+    "mosca": "^1.2.0",
+    "mqtt": "^1.8.0",
+    "sockjs": "0.3.16",
     "sockjs-client": "1.0.3",
     "sockjs-client-ws": "0.1.0",
     "ssh2": "^0.5.0",
-    "winston": "2.1.1",
+    "winston": "2.2.0",
     "colors": "1.1.2",
     "tracer": "^0.8.3"
   },
   "devDependencies": {},
   "optionalDependencies": {
     "node-notifier": "^4.5.0",
-    "serialport": "^2.0.6",
-    "redis": "0.7.3",
+    "serialport": "^2.1.0",
+    "redis": "2.6.0-1",
     "gbaumgart.inotify-plusplus": "1.0.4"
   },
   "scripts": {},
