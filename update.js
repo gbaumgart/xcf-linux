@@ -54,7 +54,8 @@ var console = tracer.colorConsole({
     dateformat : "HH:MM:ss.L"
 });
 //var _url = 'http://x4mm.net/latest.zip';
-var _url = commander.url || 'https://gitlab.com/xamiro/xcf-dist-windows/repository/archive.zip?ref=master';
+//var _url = commander.url || 'https://gitlab.com/xamiro/xcf-dist-windows/repository/archive.zip?ref=master';
+var _url = commander.url || 'http://net-commander.com/?ddownload=3581';
 var _to = path.resolve('./download.zip');
 // The options argument is optional so you can omit it
 var bar = null;
@@ -65,8 +66,7 @@ var unzipFolder = './update';
 
 console.info('Download ' + _url + ' to ' + _to);
 
-var destination = path.resolve(commander.to || '../../');
-
+var destination = path.resolve(commander.to || '../../../../');
 /**
  *
  */
@@ -222,11 +222,9 @@ function unzipArchive(what,where){
             var type = entry.type; // 'Directory' or 'File'
             var size = entry.size;
             var parts = fileName.split('/');
-            parts.shift();
-            parts.shift();
-
+            //parts.shift();
+            //parts.shift();
             var relative = parts.join(path.sep);
-
             var dest = path.resolve(destination +'/'+relative);
             if(showDiff && dest && type ==='File' && relative) {
 
@@ -284,8 +282,7 @@ function unzipArchive(what,where){
                 if(!canWrite){
                     
                     console.error('Cant write ' + dest2);
-
-                    entry.autodrain();
+                    //entry.autodrain();
                     return;
                 }
 

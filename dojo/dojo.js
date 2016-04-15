@@ -830,11 +830,11 @@
 				result.toAbsMid = function(mid){
 					return toAbsMid(mid, module);
 				};
-				if(has("dojo-undef-api")){
+				//if(has("dojo-undef-api")){
 					result.undef = function(mid){
 						req.undef(mid, module);
 					};
-				}
+				//}
 				if(has("dojo-sync-loader")){
 					result.syncLoadNls = function(mid){
 						var nlsModuleInfo = getModuleInfo(mid, module),
@@ -1284,7 +1284,7 @@
 		};
 
 
-	if(has("dojo-undef-api")){
+	//if(has("dojo-undef-api")){
 		req.undef = function(moduleId, referenceModule){
 			// In order to reload a module, it must be undefined (this routine) and then re-requested.
 			// This is useful for testing frameworks (at least).
@@ -1292,7 +1292,7 @@
 			setArrived(module);
 			mix(module, {def:0, executed:0, injected:0, node:0});
 		};
-	}
+	//}
 
 	if(has("dojo-inject-api")){
 		if(has("dojo-loader-eval-hint-url")===undefined){
